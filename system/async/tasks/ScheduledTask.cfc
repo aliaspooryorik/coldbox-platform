@@ -677,10 +677,11 @@ component accessors="true" {
 
 			// Target task call callable
 			if ( isClosure( variables.task ) || isCustomFunction( variables.task ) ) {
-				variables.stats.lastResult = variables.task() ?: "";
+				var taskResult = variables.task();
 			} else {
-				variables.stats.lastResult = invoke( variables.task, variables.method ) ?: "";
+				var taskResult = invoke( variables.task, variables.method );
 			}
+			variables.stats.lastResult = isNull( taskResult ) ? "" : taskResult;
 
 			// After Interceptor
 			if ( isClosure( variables.afterTask ) || isCustomFunction( variables.afterTask ) ) {
